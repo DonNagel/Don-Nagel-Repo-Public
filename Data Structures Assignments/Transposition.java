@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 class Transposer {
     private String fileName;
@@ -25,14 +27,34 @@ class Transposer {
         this.outputInstrument = scanner.nextInt();
         scanner.nextLine(); // Consume the newline character
         scanner.close();
-        System.out.println(inputInstrument);
-        System.out.println(outputInstrument);
 
     }
+    public void readFile(String fileName) {
+        File file = new File(fileName);
+        try (Scanner scanner = new Scanner(file)) {
+            while (scanner.hasNextLine()) {
+                String input = scanner.nextLine();
+                input = input.replaceAll(",", ""); // Remove all whitespace characters
+                this.data = input.toCharArray();
+            }
+            System.out.println(data[0]+" "+data[2]);
+        } catch (FileNotFoundException e) {
+            System.err.println("File not found: " + fileName);
+        }
+    }
+    public String getData() {
+        return new String(data);
+    }
+    public char[] transpose(char[] data, int inputInstrument, int outputInstrument) {
+        
+
+
 }
 
 public class Transposition {
     public static void main(String[] args) {
         Transposer transposer = new Transposer("input.txt");
+        transposer.readFile("input.txt");
+        System.out.println(transposer.getData());
     }
 }
