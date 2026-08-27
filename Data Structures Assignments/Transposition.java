@@ -3,15 +3,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 class Transposer {
-    private String fileName;
     private char[] data;
+    private final char[] compareData = {'a', 'b', 'c', 'd', 'e', 'f', 'g'};
     private int inputInstrument;
     private int outputInstrument;
 
     public Transposer(String fileName) {
-        this.fileName = fileName;
         this.data = new char[0];
 
+        //Get information from the user about what instrument is the input and what to translate it to.
         Scanner scanner = new Scanner(System.in);
         System.out.print("Please enter a number corresponding to the input instrument\n 1. Piano, Flute, Oboe, Bassoon, Trombone, Tuba, Strings.\n" 
         + "2. Bb Clarinet, Bass Clarinet, Soprano Sax, Tenor Sax Bb Trumpet\n"
@@ -25,7 +25,7 @@ class Transposer {
         + "3. Eb Clarinet, Alto Sax, Baritone Sax\n"
         + "4. French Horn, English Horn.\n");
         this.outputInstrument = scanner.nextInt();
-        scanner.nextLine(); // Consume the newline character
+        scanner.nextLine();
         scanner.close();
 
     }
@@ -45,16 +45,67 @@ class Transposer {
     public String getData() {
         return new String(data);
     }
-    public char[] transpose(char[] data, int inputInstrument, int outputInstrument) {
-        
+    //The mathematical formula for the transposition process.
+    private char[] transposeTo() {
+        //For the formula section.
+        int comparator = 0;
+        int index = 0;
+        if (inputInstrument == outputInstrument || inputInstrument == 1) {
+            return data;
+            //If values are the same, no transposition is needed, return original data.
+            //If input = 1, no transpositon to is needed. return data as is.
+        }
+        //All input values are first set to 'C' transpositon, the base value for music.
+        switch (inputInstrument) {
+            //Bb instruments are set to 1, because of a 1 step difference in notes.
+            case 2:
+                inputInstrument = -1;
+                break;
+            //Eb instruments are set to 6, because of a 6 step difference in notes.
+            case 3:
+                inputInstrument = -5;
+                break;
+            //F instruments are set to 4, because of a 4 step difference.
+            case 4:
+                inputInstrument = -4;
+                break;
+        }
 
-
-}
+        for (char note : data) {
+            //Converts to C.
+            
+            if (note == 'a') {
+                comparator = 0;
+            } else if (note == 'b') {
+                comparator = 1;
+            } else if (note == 'c') {
+                comparator = 2;
+            } else if (note == 'd') {
+                comparator = 3;
+            } else if (note == 'e') {
+                comparator = 4;
+            } else if (note == 'f') {
+                comparator = 5;
+            } else if (note == 'g') {
+                comparator = 6;
+            }
+            if (comparator <= 0) {
+                comparator = (comparator + inputInstrument + 7);
+            } else{
+                comparator = comparator + inputInstrument;
+            }
+            data[index] = compareData[comparator];
+            index = index++;
+        }
+        return data;
+    }
 
 public class Transposition {
     public static void main(String[] args) {
         Transposer transposer = new Transposer("input.txt");
         transposer.readFile("input.txt");
         System.out.println(transposer.getData());
+        System.out.println(transposer.transposeTo());
     }
+}
 }
