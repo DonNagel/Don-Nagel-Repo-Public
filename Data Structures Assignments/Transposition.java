@@ -89,13 +89,13 @@ class Transposer {
             } else if (note == 'g') {
                 comparator = 6;
             }
-            if (comparator <= 0) {
-                comparator = (comparator + inputInstrument + 7);
-            } else{
-                comparator = comparator + inputInstrument;
+            comparator = comparator + inputInstrument;
+            if (comparator < 0) {
+                comparator = comparator + 7;
             }
             data[index] = compareData[comparator];
-            index = index++;
+            index = index + 1;
+            System.out.println(index);
         }
         return data;
     }
