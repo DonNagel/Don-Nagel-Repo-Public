@@ -39,7 +39,6 @@ class Transposer {
                 input = input.replaceAll(",", ""); // Remove all whitespace characters
                 this.data = input.toCharArray();
             }
-            System.out.println(data[0]+" "+data[2]);
         } catch (FileNotFoundException e) {
             System.err.println("File not found: " + fileName);
         }
