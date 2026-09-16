@@ -1,4 +1,8 @@
+import java.util.ArrayList;
+import Assignment2.PurchaseItem;
+
 public class PurchaseLog {
+    private ArrayList<PurchaseItem> items;
 
     // TODO: declare the field that stores your PurchaseItem records.
     // Decide: ArrayList<PurchaseItem> or LinkedList<PurchaseItem>?
