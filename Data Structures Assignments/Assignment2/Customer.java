@@ -1,3 +1,4 @@
+package Assignment2;
 public class Customer {
     private String name;
     private int itemCount;

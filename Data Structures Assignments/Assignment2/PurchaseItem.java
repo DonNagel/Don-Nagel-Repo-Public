@@ -1,3 +1,4 @@
+package Assignment2;
 public class PurchaseItem {
     private String name;
     private double price;
